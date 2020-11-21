@@ -27,10 +27,9 @@ Edit `amplify/backend/api/<YOUR_API>/transform.conf.json` and append `"graphql-t
 Append `@ttl` to target fields.
 
 ```graphql
-type ExpiringChatMessage @model {
-  id: ID!
-  message: String
-  expirationUnixTime: AWSTimestamp! @ttl
+type Query {
+  listFoo(in: FooInput!): ModelFooConnection @aws_dynamodb_resolver(table: "Foo")
+  listBar(in: BarInput!): ModelBarConnection @aws_dynamodb_resolver(table: "Bar", template: {request: "Query.listBar.req.vtl", response: "Query.listBar.res.vtl"})
 }
 ```
 
